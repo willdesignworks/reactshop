@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+// bootstrap
+import 'bootstrap/scss/bootstrap.scss';
+//import './stylesheets/all.SCSS';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { HashRouter } from 'react-router-dom';
+
+// 預設API 網址
+import axios from 'axios';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <HashRouter>
     <App />
+    </HashRouter>
   </React.StrictMode>
 );
 
