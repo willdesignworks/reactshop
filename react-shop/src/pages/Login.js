@@ -1,12 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // 路由跳轉
 
 function Login() {
+  const navigate = useNavigate(); // 路由跳轉
   // 儲存資料
   const [data, setData] = useState({
     username: '',
     password:''
   });
+
+  // 登入狀態
+  const [loginState, setLoginState] = useState({});
 
   // 寫入資料
   const handleChange = (e) => {
@@ -17,22 +22,30 @@ function Login() {
 
   // API-登入驗證
   const submit = async (e) => {
-    const res = await axios.post(`/v2/admin/signin`, data);
-    // console.kog(res)
-    const { taken } = res.data;
-    axios.defaults.headers.common['Authorization'] = taken;
-
-    const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`);
-    console.log(productRes)
-  }
+    try {
+      const res = await axios.post(`/v2/admin/signin`, data);
+      const { token, expired } = res.data;
+  
+      // 儲存taken
+      document.cookie = `hexToken=${token}; expires=${new Date(expired)};`
+  
+      // 轉址-登入狀態
+      if(res.data.success) {
+        navigate('/admin/products')
+      }
+    } catch (error) {
+      setLoginState(error.response.data);
+      //console.log(error);
+    }
+  };
 
   return (<div className="container py-5">
     <div className="row justify-content-center">
       <div className="col-md-6">
         <h2>登入帳號</h2>
 
-        <div className="alert alert-danger" role="alert">
-          錯誤訊息
+        <div className={`alert alert-danger ${loginState.message ? 'd-block' : 'd-none'}`} role="alert">
+          {loginState.message}
         </div>
         <div className="mb-2">
           <label htmlFor="email" className="form-label w-100">
