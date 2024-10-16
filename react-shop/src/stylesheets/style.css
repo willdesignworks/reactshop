@@ -1,0 +1,9 @@
+.page-link.disabled {
+  color: #adadad;
+  background-color: #dfdfdf;
+}
+
+.active > .page-link, .page-link.active{
+  color: #fff;
+  background-color: #0d6efd;
+}
