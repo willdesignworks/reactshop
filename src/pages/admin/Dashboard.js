@@ -1,9 +1,14 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
+
+// 錯誤訊息 (跨元件溝通)
+import Message from "../../components/Message";
+import {MessageContext, messageReducer, initState} from '../../store/messageStore';
 
 function Dashboard() {
   const navigate = useNavigate(); // 登出轉址
+  const reducer = useReducer(messageReducer, initState); // 錯誤訊息初始化 (跨元件溝通)
 
   // 登出轉址
   const logout = () => {
@@ -36,7 +41,8 @@ function Dashboard() {
   }, [navigate, token])
 
   return (
-    <>
+    <MessageContext.Provider value={reducer}>
+      <Message />
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
           <p className="text-white mb-0">
@@ -67,18 +73,18 @@ function Dashboard() {
       <div className="d-flex" style={{ minHeight: 'calc(100vh - 56px)' }}>
         <div className="bg-light" style={{ width: '200px' }}>
           <ul className="list-group list-group-flush">
-            <a className="list-group-item list-group-item-action py-3" to="/admin/products">
+            <Link className="list-group-item list-group-item-action py-3" to="/admin/products">
               <i className="bi bi-cup-fill me-2" />
               產品列表
-            </a>
-            <a className="list-group-item list-group-item-action py-3" to="/admin/coupons">
+            </Link>
+            <Link className="list-group-item list-group-item-action py-3" to="/admin/coupons">
               <i className="bi bi-ticket-perforated-fill me-2" />
               優惠卷列表
-            </a>
-            <a className="list-group-item list-group-item-action py-3" to="/admin/orders">
+            </Link>
+            <Link className="list-group-item list-group-item-action py-3" to="/admin/orders">
               <i className="bi bi-receipt me-2" />
               訂單列表
-            </a>
+            </Link>
           </ul>
         </div>
         <div className="w-100">
@@ -87,7 +93,7 @@ function Dashboard() {
           {/* Products end */}
         </div>
       </div>
-    </>
+    </MessageContext.Provider>
   )
 }
 

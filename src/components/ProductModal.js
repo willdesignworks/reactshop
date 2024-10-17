@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MessageContext, handleSuccessMessage, handleErrorMessage } from "../store/messageStore";
 
 function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
   // 資料狀態
@@ -14,6 +15,8 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
     "is_enabled": 1,
     "imageUrl": "",
   });
+
+  const [, dispatch] = useContext(MessageContext); // Reducer messageStore.js (跨元件傳遞)
 
   // Modal用途
   useEffect(() => {
@@ -60,6 +63,7 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
   // API-寫入資料
   const submit = async () => {
     try {
+
       // API-新增 (預設)
       let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`;
       let method = 'post'
@@ -72,16 +76,19 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
 
       const res = await axios[method](
         api, {
-        data: tempData,
-      }
+          data: tempData,
+        }
 
-    );
-    console.log(res);
-    closeProductModal(); // 關閉Modal
-    getProducts(); // API-取得資料
+      );
+      console.log(res); // API-取得資料
+
+      handleSuccessMessage(dispatch, res); // 成功Reducer messageStore.js (跨元件傳遞)
+      closeProductModal(); // 關閉Modal
+      getProducts(); // API-取得資料
 
     } catch(error) {
       console.log(error);
+      handleErrorMessage(dispatch, error); // 失敗Reducer messageStore.js (跨元件傳遞)
     }
 
   }
