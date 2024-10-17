@@ -4,18 +4,18 @@ function FrontLayout() {
   return (
     <>
     {/*navbar*/}
-     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand" href="./index.html">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+     <div className="container">
+        <nav className="navbar navbar-expand-lg navbar-light">
+          <a className="navbar-brand" href="./index.html">Navbar</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-item nav-link me-4 active" href="./index.html">Home <span class="sr-only">(current)</span></a>
-              <a class="nav-item nav-link me-4" href="./product.html">Product</a>
-              <a class="nav-item nav-link me-4" href="./detail.html">Detail</a>
-              <a class="nav-item nav-link" href="./cart.html"><i class="fas fa-shopping-cart"></i></a>
+          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div className="navbar-nav">
+              <a className="nav-item nav-link me-4 active" href="./index.html">Home <span className="sr-only">(current)</span></a>
+              <a className="nav-item nav-link me-4" href="./product.html">Product</a>
+              <a className="nav-item nav-link me-4" href="./detail.html">Detail</a>
+              <a className="nav-item nav-link" href="./cart.html"><i className="fas fa-shopping-cart"></i></a>
             </div>
           </div>
         </nav>

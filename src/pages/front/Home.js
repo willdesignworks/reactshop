@@ -1,7 +1,7 @@
 function Home() {
   return (
     <>
-    <div class="position-relative">
+    <div className="position-relative">
       <div className="position-absolute" 
       style={{
         top: '0',
@@ -12,7 +12,7 @@ function Home() {
         backgroundPosition: 'center center',
         opacity: '0.1',
       }}></div>
-      <nav>選單 版型1 在這裡, Home 跟 選單重疊</nav>
+
       <div className="container d-flex flex-column" style={{minHeight: '100vh',}}>
         <div className="row justify-content-center my-auto">
             <div className="col-md-4 text-center">
