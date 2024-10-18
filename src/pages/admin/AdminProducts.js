@@ -6,7 +6,7 @@ import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
 
 function AdminProducts() {
-  const [products, setProducts] = useState( [] ); //商 品狀態
+  const [products, setProducts] = useState( [] ); // 商品狀態
   const [pagination, setPagination] = useState( {} ); // 分頁狀態
   
   const [type, setType] = useState('create'); // Modal用途(類型edit)
@@ -30,7 +30,7 @@ function AdminProducts() {
   const getProducts = async (page = 1) => {
       // API-列表
       const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products?page=${page}`);
-      console.log(productRes)
+      console.log(productRes);
       setProducts(productRes.data.products);
       setPagination(productRes.data.pagination); // 分頁
   };
@@ -143,9 +143,9 @@ function AdminProducts() {
       */}
       </tbody>
     </table>
-    
-    <Pagination pagination={pagination} changePage={getProducts}/> 
-
+    <nav aria-label="Page navigation example">
+      <Pagination pagination={pagination} changePage={getProducts}/> 
+    </nav>
   </div>
   </>)
 };

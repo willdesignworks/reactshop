@@ -1,6 +1,5 @@
 function Pagination({ pagination, changePage }) {
   return (
-    <nav aria-label="Page navigation example">
       <ul className="pagination">
         <li className="page-item">
           <a className={`page-link ${pagination.has_pre ? '' : 'disabled'}`} href="/" aria-label="Previous" 
@@ -39,7 +38,6 @@ function Pagination({ pagination, changePage }) {
           </a>
         </li>
       </ul>
-    </nav>
   );
 };
 

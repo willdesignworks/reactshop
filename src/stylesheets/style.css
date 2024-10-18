@@ -2,8 +2,40 @@
   color: #adadad;
   background-color: #dfdfdf;
 }
-
 .active > .page-link, .page-link.active{
   color: #fff;
   background-color: #0d6efd;
+}
+.card img {
+  object-fit: cover;
+  height: 200px;
+}
+.btn:focus-visible,
+.btn:visited {
+  border: 0;
+}
+.btn svg {
+  fill: #212529;
+  width: 25px;
+}
+.btn:hover svg {
+  fill: #fff;
+}
+.bg-light {
+  background-color: #F2F2F2;
+}
+.navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.5);
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: rgba(0, 0, 0, 0.7);
+}
+.nav-link svg {
+  fill: rgba(0, 0, 0, 0.55);
+  width: 18px;
+}
+.nav-link:hover svg,
+.nav-link:focus svg {
+  fill: rgba(0, 0, 0, 0.7);
 }

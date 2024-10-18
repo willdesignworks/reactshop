@@ -1,27 +1,33 @@
+import axios from "axios";
 import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Navbar from "../../components/Navbar";
 
 function FrontLayout() {
+
+  const [carData, setCarData] = useState({}); // 訂單
+
+  // 訂單-數量 (寫入)
+  const getCart = async () => {
+    try {
+      const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,);
+      console.log('訂單', res);
+      setCarData(res.data.data); // 訂單-數量 (寫入)
+    } catch(error) {
+      console.log(error);
+    };
+  };
+
+  useEffect(() => {
+    getCart();
+  }, []);
+
   return (
     <>
     {/*navbar*/}
-     <div className="container">
-        <nav className="navbar navbar-expand-lg navbar-light">
-          <a className="navbar-brand" href="./index.html">Navbar</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-item nav-link me-4 active" href="./index.html">Home <span className="sr-only">(current)</span></a>
-              <a className="nav-item nav-link me-4" href="./product.html">Product</a>
-              <a className="nav-item nav-link me-4" href="./detail.html">Detail</a>
-              <a className="nav-item nav-link" href="./cart.html"><i className="fas fa-shopping-cart"></i></a>
-            </div>
-          </div>
-        </nav>
-      </div>
+    <Navbar carData={carData}/>
     {/*home*/}
-    <Outlet></Outlet>
+    <Outlet context={{ getCart }}></Outlet>
     {/*footer*/}
     <div className="bg-dark py-5">
       <div className="container">
