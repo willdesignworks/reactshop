@@ -2,19 +2,24 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import Loading from "../../components/Loading";
 
 function Products() {
 
   const [products, setProducts] = useState([]);  // 商品狀態
   const [pagination, setPagination] = useState([]); // 分頁狀態
+  const [isLoading, setLoading] = useState(false) // react-loading
 
   // API-取得資料
   const getProducts = async (page = 1) => {
+      setLoading(true); // react-loading
       // API-列表
       const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`);
       console.log('products 商品:', productRes);
       setProducts(productRes.data.products);
       setPagination(productRes.data.pagination); // 分頁
+
+      setLoading(false); // react-loading
   };
 
   useEffect(() => {
@@ -23,7 +28,9 @@ function Products() {
 
   return (
     <>
+    <Loading isLoading={isLoading }/>
     <div className="position-relative d-flex align-items-center justify-content-center" style={{minHeight: '400px',}}>
+
       <div className="position-absolute" 
       style={{top:'0', bottom: '0', left: '0', right: '0', 
       backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', 

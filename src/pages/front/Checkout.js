@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 
  // react-hook-form
@@ -8,7 +8,10 @@ import { Textarea } from '../../components/FormElements';
 
 
 function Checkout () {
-  const { cartData } = useOutletContext();
+  const { cartData } = useOutletContext(); // 取得 購物車資料
+  const {getCart} = useOutletContext(); // 重啟購物車 數量歸 0
+
+  const navigate = useNavigate(); // 付款完成 轉址到 Success.js
 
   // react-hook-form
   const {
@@ -36,6 +39,8 @@ function Checkout () {
     };
     const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/order`, form,);
     console.log('送出訂單', res);
+    getCart(); // 重啟購物車 數量歸 0
+    navigate(`/success/${res.data.orderId}`); // 付款完成 轉址到 Success.js
   };
 
   return (

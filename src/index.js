@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // bootstrap
 import 'bootstrap/scss/bootstrap.scss';
-import './stylesheets/all.SCSS';
+import './assets/stylesheets/all.SCSS';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
-import "./stylesheets/style.css"
+import "./assets/stylesheets/style.css"
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
