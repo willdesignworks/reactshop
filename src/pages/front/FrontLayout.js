@@ -1,18 +1,18 @@
 import axios from "axios";
-import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 
 function FrontLayout() {
 
-  const [carData, setCarData] = useState({}); // 訂單
+  const [cartData, setCartData] = useState({}); // 訂單
 
   // 訂單-數量 (寫入)
   const getCart = async () => {
     try {
       const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,);
-      console.log('訂單', res);
-      setCarData(res.data.data); // 訂單-數量 (寫入)
+      console.log('layout 訂單:', res);
+      setCartData(res.data.data); // 訂單-數量 (寫入)
     } catch(error) {
       console.log(error);
     };
@@ -25,9 +25,9 @@ function FrontLayout() {
   return (
     <>
     {/*navbar*/}
-    <Navbar carData={carData}/>
+    <Navbar cartData={cartData} />
     {/*home*/}
-    <Outlet context={{ getCart }}></Outlet>
+    <Outlet context={{ getCart, cartData }}></Outlet>
     {/*footer*/}
     <div className="bg-dark py-5">
       <div className="container">

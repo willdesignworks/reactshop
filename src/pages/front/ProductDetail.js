@@ -15,7 +15,7 @@ function ProductDetail() {
   const getProduct = async (id) => {
     // API-列表
     const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/product/${id}`);
-    console.log('商品', productRes);
+    console.log('Detail 商品:', productRes);
     setProduct(productRes.data.product);
   };
 
@@ -30,7 +30,7 @@ function ProductDetail() {
     setIsLoading(true);
     try {
       const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`, data,);
-      console.log('訂單', res);
+      console.log('Detail 訂單:', res);
       getCart(); // 訂單-數量 (跨元件傳遞)
       setIsLoading(false);
     } catch(error) {
@@ -132,7 +132,7 @@ function ProductDetail() {
       </div>
       <div className="row my-5">
         <div className="col-md-12">
-          <p>{product.content}</p>
+          <div dangerouslySetInnerHTML={{ __html: product.content }} />
         </div>
       </div>
       {/*<h3 className="fw-bold">Lorem ipsum dolor sit amet</h3>

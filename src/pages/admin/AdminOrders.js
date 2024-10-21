@@ -52,6 +52,7 @@ function AdminOrders() {
           <tr>
             <th scope='col'>訂單 id</th>
             <th scope='col'>購買用戶</th>
+            <th scope='col'>購買信箱</th>
             <th scope='col'>訂單金額</th>
             <th scope='col'>付款狀態</th>
             <th scope='col'>付款日期</th>
@@ -64,10 +65,8 @@ function AdminOrders() {
             return (
               <tr key={order.id}>
                 <td>{order.id}</td>
-                <td>
-                  {order.user?.name}
-                  {order.user?.email}
-                </td>
+                <td>{order.user?.name}</td>
+                <td>{order.user?.email}</td>
                 <td>${order.total}</td>
                 <td>
                   {order.is_paid ? (

@@ -12,7 +12,7 @@ function Products() {
   const getProducts = async (page = 1) => {
       // API-列表
       const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`);
-      console.log(productRes);
+      console.log('products 商品:', productRes);
       setProducts(productRes.data.products);
       setPagination(productRes.data.pagination); // 分頁
   };
@@ -38,7 +38,7 @@ function Products() {
               <div className="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
                 <div className="d-flex justify-content-between align-items-center pe-1">
                   <h4 className="mb-0">
-                    Lorem ipsum
+                    服飾
                   </h4>
                   <i className="fas fa-chevron-down"></i>
                 </div>
@@ -46,7 +46,7 @@ function Products() {
               <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div className="card-body py-0">
                   <ul className="list-unstyled">
-                    <li><a href="#" className="py-2 d-block text-muted">Lorem ipsum</a></li>
+                    <li><a href="#" className="py-2 d-block text-muted">長袖</a></li>
                   </ul>
                 </div>
               </div>
@@ -55,7 +55,7 @@ function Products() {
               <div className="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
                 <div className="d-flex justify-content-between align-items-center pe-1">
                   <h4 className="mb-0">
-                    Lorem ipsum
+                    褲子
                   </h4>
                   <i className="fas fa-chevron-down"></i>
                 </div>
@@ -72,7 +72,7 @@ function Products() {
               <div className="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree">
                 <div className="d-flex justify-content-between align-items-center pe-1">
                   <h4 className="mb-0">
-                    Lorem ipsum
+                    配件
                   </h4>
                   <i className="fas fa-chevron-down"></i>
                 </div>
@@ -94,7 +94,7 @@ function Products() {
                 <div className="col-md-6" key={product.id}>
                   <div className="card border-0 mb-4 position-relative position-relative">
                     <Link to={`/product/${product.id}`}>
-                      <img src={product.imageUrl} className="card-img-top rounded-0" alt="..." />
+                      <img src={product.imageUrl} className="card-img-top rounded-0 object-cover" alt="..." />
                     </Link>
                     <div className="card-body p-0">
                       <h4 className="mb-0 mt-3">
@@ -106,7 +106,7 @@ function Products() {
                   </div>
                 </div>
               );
-            })};
+            })}
           </div>
           <nav className="d-flex justify-content-center">
             <Pagination pagination={pagination} changePage={getProducts}/>

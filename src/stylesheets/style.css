@@ -1,3 +1,7 @@
+.container {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
 .page-link.disabled {
   color: #adadad;
   background-color: #dfdfdf;
@@ -6,7 +10,7 @@
   color: #fff;
   background-color: #0d6efd;
 }
-.card img {
+.object-cover {
   object-fit: cover;
   height: 200px;
 }
@@ -38,4 +42,11 @@
 .nav-link:hover svg,
 .nav-link:focus svg {
   fill: rgba(0, 0, 0, 0.7);
+}
+.position-absolute svg {
+  fill: #5d636b;
+  width: 16px;
+}
+.btn:hover svg {
+  fill: #212529;
 }
