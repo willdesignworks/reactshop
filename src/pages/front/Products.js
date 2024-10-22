@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading"; // react-loading
 
 function Products() {
 
@@ -30,16 +30,12 @@ function Products() {
     <>
     <Loading isLoading={isLoading }/>
     <div className="position-relative d-flex align-items-center justify-content-center" style={{minHeight: '400px',}}>
-
-      <div className="position-absolute" 
-      style={{top:'0', bottom: '0', left: '0', right: '0', 
-      backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', 
-      backgroundPosition: 'center center', opacity: '0.1',}}></div>
+      <div className="position-absolute productstopbg"></div>
       <h2 className="fw-bold">Lorem ipsum.</h2>
     </div>
     <div className="container mt-md-5 mt-3 mb-7">
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-2">
           <div className="accordion border border-bottom border-top-0 border-start-0 border-end-0 mb-3" id="accordionExample">
             <div className="card border-0">
               <div className="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
@@ -94,7 +90,7 @@ function Products() {
             </div>
           </div>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-10">
           <div className="row">
             {products.map((product) => {
               return (
@@ -107,7 +103,7 @@ function Products() {
                       <h4 className="mb-0 mt-3">
                         <Link to={`/product/${product.id}`}>{product.title}</Link>
                       </h4>
-                      <p className="card-text mb-0">NT${product.price} <span className="text-muted "><del>NT$ {product.price}</del></span></p>
+                      <p className="card-text mb-0">NT${product.price}</p>
                       <p className="text-muted mt-3"></p>
                     </div>
                   </div>
@@ -121,7 +117,7 @@ function Products() {
         </div>
       </div>
     </div>
-    <div className="bg-light py-4">
+    {/*<div className="bg-light py-4">
       <div className="container">
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
           <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
@@ -135,7 +131,7 @@ function Products() {
           </div>
         </div>
       </div>
-    </div>
+    </div>*/}
     </>
   );
 };

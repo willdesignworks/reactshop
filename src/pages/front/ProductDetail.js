@@ -1,22 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import RelatedProducts from "../../components/RelatedProducts";
+import RelatedNavbar from "../../components/RelatedNavbar";
+import Carousel from "../../components/Carousel";
+import Loading from "../../components/Loading"; // react-loading
 
 function ProductDetail() {
+  window.scrollTo(0, 0);
   const [product, setProduct] = useState({}); // 商品狀態
   const [carQuantity, setcarQuantity] = useState(1); // 商品-數量
-  const [isLoading, setIsLoading] = useState(false); // 商品-讀取
+  const [isproLoading, setIsproLoading] = useState(false); // 商品-讀取
+  const [isAddedToCart, setIsAddedToCart] = useState(false); // 商品是否已加入購物車
   const { getCart } = useOutletContext(); // 訂單-數量 (跨元件傳遞)
+  const [isLoading, setLoading] = useState(false) // react-loading
+  const navigate = useNavigate();
 
   const { id } = useParams();
   //console.log(id);
 
   // API-取得資料
   const getProduct = async (id) => {
+    setLoading(true); // react-loading
     // API-列表
     const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/product/${id}`);
     console.log('Detail 商品:', productRes);
     setProduct(productRes.data.product);
+
+    setLoading(false); // react-loading
   };
 
   // API-商品
@@ -27,15 +38,16 @@ function ProductDetail() {
         qty: carQuantity,
       },
     };
-    setIsLoading(true);
+    setIsproLoading(true);
     try {
       const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`, data,);
       console.log('Detail 訂單:', res);
       getCart(); // 訂單-數量 (跨元件傳遞)
-      setIsLoading(false);
+      setIsAddedToCart(true); // 標記商品已加入購物車
+      setIsproLoading(false);
     } catch(error) {
       console.log(error);
-      setIsLoading(false);
+      setIsproLoading(false);
     };
   }
 
@@ -45,45 +57,20 @@ function ProductDetail() {
 
   return (
     <>
-    <div className="container">
+    <Loading isLoading={ isLoading }/>
+    <div className="container ProductDetail">
     <div className="row align-items-center">
         <div className="col-md-7">
-          <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img src={product.imageUrl} className="d-block w-100" alt="..." />
-              </div>
-              <div className="carousel-item">
-                <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" className="d-block w-100" alt="..." />
-              </div>
-              <div className="carousel-item">
-                <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" className="d-block w-100" alt="..." />
-              </div>
-            </div>
-            <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </a>
-          </div>
+          <img src={product.imageUrl} className="d-block w-100" alt="..." />
         </div>
         <div className="col-md-5">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb bg-white px-0 mb-0 py-3">
-              <li className="breadcrumb-item"><a className="text-muted" href="./index.html">Home</a></li>
-              <li className="breadcrumb-item"><a className="text-muted" href="./product.html">Product</a></li>
-              <li className="breadcrumb-item active" aria-current="page">Detail</li>
-            </ol>
-          </nav>
-          <h2 className="fw-bold h1 mb-1">{product.title}</h2>
-          <p className="mb-0 text-muted text-end"><del>NT${product.price}</del></p>
-          <p className="h4 fw-bold text-end">NT${product.price}</p>
+          <RelatedNavbar /*current="Detail"*//>
+          <h2 className="fw-bold h1 mb-2">{product.title}</h2>
+          <p class="productpromotionstag mb-3">全店，NT4500免運費</p>
+          <p className="h4 fw-bold" >NT${product.price}</p>
           <div className="row align-items-center">
-            <div className="col-6">
-
+            <div className="col-12">
+              <p className="mt-5">數量</p>
               <div className="input-group my-3 bg-light rounded">
                 <div className="input-group-prepend">
                   <button 
@@ -120,13 +107,40 @@ function ProductDetail() {
             <div className="col-6">
               <button
                type="button" 
-               className="text-nowrap btn btn-dark w-100 py-2" 
-               onClick={() => addToCar()} 
-               disabled={isLoading}
+               className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-dark'} w-100 py-2`} 
+               onClick={isAddedToCart ? null : addToCar} 
+               disabled={isproLoading || isAddedToCart}
               >
-              加入購物車
+              {isAddedToCart ? '已加入購物車' : '加入購物車'}
               </button>
             </div>
+            <div className="col-6">
+              <button
+               type="button" 
+               className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-org'} w-100 py-2`} 
+               onClick={() => {
+                addToCar(); // 加入購物車
+                navigate('/Checkout'); // 跳轉到購物車
+              }}
+               disabled={isproLoading || isAddedToCart}
+              >
+              {isAddedToCart ? '已經購買' : '立即購買'}
+                
+              </button>
+            </div>
+          </div>
+          <div className="deliveryoption">
+            <h5>送貨方式</h5>
+            <ul>
+              <li>7-11 取貨付款(3-5天)</li>
+              <li>7-11 純取貨(3-5天)</li>
+              <li>全家 取貨付款(3-5天)</li>
+              <li>全家 純取貨(3-5天)</li>
+              <li>新竹物流 運費NT130 (約3-5天)</li>
+              <li>順豐快遞(中國大陸)(3-5天)</li>
+              <li>順豐快遞(香港)(3-5天)</li>
+              <li>順豐快遞(澳門)(3-5天)</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -135,71 +149,8 @@ function ProductDetail() {
           <div dangerouslySetInnerHTML={{ __html: product.content }} />
         </div>
       </div>
-      {/*<h3 className="fw-bold">Lorem ipsum dolor sit amet</h3>
-      <div className="swiper-container mt-4 mb-5">
-        <div className="swiper-wrapper">
-          <div className="swiper-slide">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" className="card-img-top rounded-0" alt="..." />
-              <a href="#" className="text-dark">
-              </a>
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-3"><a href="#">Lorem ipsum</a></h4>
-                <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                <p className="text-muted mt-3"></p>
-              </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" className="card-img-top rounded-0" alt="..." />
-              <a href="#" className="text-dark">
-              </a>
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-3"><a href="#">Lorem ipsum</a></h4>
-                <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                <p className="text-muted mt-3"></p>
-              </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" className="card-img-top rounded-0" alt="..." />
-              <a href="#" className="text-dark">
-              </a>
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-3"><a href="#">Lorem ipsum</a></h4>
-                <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                <p className="text-muted mt-3"></p>
-              </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" className="card-img-top rounded-0" alt="..." />
-              <a href="#" className="text-dark">
-              </a>
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-3"><a href="#">Lorem ipsum</a></h4>
-                <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                <p className="text-muted mt-3"></p>
-              </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" className="card-img-top rounded-0" alt="..." />
-              <a href="#" className="text-dark">
-              </a>
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-3"><a href="#">Lorem ipsum</a></h4>
-                <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                <p className="text-muted mt-3"></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>*/}
+      <h3 className="fw-bold">你可能會喜歡的商品</h3>
+      <RelatedProducts />
     </div>
     </>
   );

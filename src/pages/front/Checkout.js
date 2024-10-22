@@ -76,8 +76,8 @@ function Checkout () {
                   <td className='text-end border-0 px-0 pt-4'>NT$ {cartData.final_total}</td>
                 </tr>
                 <tr>
-                  <th scope='row' className='border-0 px-0 pt-0 pb-4 font-weight-normal'>Payment</th>
-                  <td className='text-end border-0 px-0 pt-0 pb-4'>ApplePay</td>
+                  <th scope='row' className='border-0 px-0 pt-0 pb-4 font-weight-normal'>運費</th>
+                  <td className='text-end border-0 px-0 pt-0 pb-4'>NT$ 0</td>
                 </tr>
               </tbody>
             </table>
@@ -169,10 +169,10 @@ function Checkout () {
                 ></Textarea>
             </div>
             <div className='d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100'>
-            <Link to='/cart' className='text-dark mt-md-0 mt-3'>
+            <Link to='/products' className='text-dark mt-md-0 mt-3'>
               <svg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'>
                 <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m15 19-7-7 7-7'/>
-              </svg> 繼續點餐
+              </svg> 繼續購物
             </Link>
             <button type='submit' className='btn btn-dark py-3 px-7'>送出訂單</button>
           </div>

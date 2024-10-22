@@ -5,7 +5,7 @@ function Navbar({ cartData }) {
     <>
      <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
-          <NavLink className="navbar-brand" to="/">Navbar</NavLink>
+          <NavLink className="navbar-brand" to="/">XRAGE</NavLink>
           <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div className="navbar-nav">
               <NavLink className="nav-item nav-link me-4 active" to="/">

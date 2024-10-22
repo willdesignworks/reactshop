@@ -122,9 +122,11 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
                     <input
                       type='text'
                       name='imageUrl'
-                      id='image'
+                      id='imageUrl'
                       placeholder='請輸入圖片連結'
                       className='form-control'
+                      onChange={handleChange} 
+                      value={tempData.imageUrl}
                     />
                   </label>
                 </div>

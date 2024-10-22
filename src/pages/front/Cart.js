@@ -1,18 +1,22 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import Loading from "../../components/Loading"; // react-loading
 
 function Cart() {
   const { cartData, getCart } = useOutletContext(); // (跨元件傳遞)
   console.log('Cart 訂單:', cartData);
 
   const [loadingItems, setLoadingItem] = useState([]); // 正在更新數量的品項 避免重新選取 (disabled)
+  const [isLoading, setLoading] = useState(false) // react-loading
 
   // API-刪除訂單
   const removeCartItem = async (id) => {
     try {
+      setLoading(true); // react-loading
       const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`);
       getCart();
+      setLoading(false); // react-loading
     } catch (error) {
       console.log(error);
     };
@@ -31,6 +35,7 @@ function Cart() {
     setLoadingItem([...loadingItems, item.id])
 
     try {
+      setLoading(true); // react-loading
       const res = await axios.put(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`, data,);
       
       // 避免重新選取, filter找到, 讀取(loadingObject) 跟 item.id 不相同, 就去除
@@ -39,6 +44,7 @@ function Cart() {
       );
 
       getCart();
+      setLoading(false); // react-loading
     } catch (error) {
       console.log(error);
     };
@@ -47,6 +53,7 @@ function Cart() {
 
   return (
     <>
+    <Loading isLoading={isLoading }/>
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6 bg-white py-5" style={{ minHeight: "calc(100vh - 56px - 76px)" }}>
@@ -101,8 +108,8 @@ function Cart() {
                 <td className="text-end border-0 px-0">NT${cartData.final_total}</td>
               </tr>
               <tr>
-                <th scope="row" className="border-0 px-0 pt-0 font-weight-normal">優惠卷</th>
-                <td className="text-end border-0 px-0 pt-0">NT$500</td>
+                <th scope="row" className="border-0 px-0 pt-0 font-weight-normal">運費</th>
+                <td className="text-end border-0 px-0 pt-0">NT$0</td>
               </tr>
             </tbody>
           </table>
