@@ -11,7 +11,9 @@ import ProductDetail from "./pages/front/ProductDetail";
 import Cart from "./pages/front/Cart";
 import Checkout from "./pages/front/Checkout";
 import Success from "./pages/front/Success";
-
+import CategoryGoods from "./pages/front/CategoryGoods";
+import CategoryShirts from "./pages/front/CategoryShirts";
+import CategoryPants from "./pages/front/CategoryPants";
 function App() {
 
   return (
@@ -21,6 +23,9 @@ function App() {
           <Route path="" element={<Home/>}></Route>
           <Route path="products" element={<Products/>}></Route>
           <Route path="product/:id" element={<ProductDetail/>}></Route>
+          <Route path="categorygoods" element={<CategoryGoods />}></Route>
+          <Route path="categoryshirts" element={<CategoryShirts />}></Route>
+          <Route path="categorypants" element={<CategoryPants />}></Route>
           <Route path="cart" element={<Cart/>}></Route>
           <Route path="checkout" element={<Checkout/>}></Route>
           <Route path="success/:orderId" element={<Success/>}></Route>

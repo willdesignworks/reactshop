@@ -5,27 +5,31 @@ import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading"; // react-loading
 import ProductsCategorySidebar from "../../components/ProductsCategorySidebar";
 
-function Products() {
+function CategoryGoods() {
 
   const [products, setProducts] = useState([]);  // 商品狀態
   const [pagination, setPagination] = useState([]); // 分頁狀態
   const [isLoading, setLoading] = useState(false) // react-loading
 
   // API-取得資料
-  const getProducts = async (page = 1) => {
-      setLoading(true); // react-loading
-      // API-列表
-      const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`);
-      console.log('products 商品:', productRes);
-      setProducts(productRes.data.products);
-      setPagination(productRes.data.pagination); // 分頁
+  const getProducts = async (page = 1, category = '配件') => {
+    setLoading(true);
+    try {
+        const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}&category=${category}`);
+        console.log('products 配件:', productRes);
+        setProducts(productRes.data.products);
+        setPagination(productRes.data.pagination);
+    } catch (error) {
+        console.error('API 請求錯誤:', error);
+    } finally {
+        setLoading(false);
+    }
+};
 
-      setLoading(false); // react-loading
-  };
+useEffect(() => {
+  getProducts(1, '配件');
+}, []);
 
-  useEffect(() => {
-    getProducts(1);
-  }, []);
 
   return (
     <>
@@ -37,7 +41,7 @@ function Products() {
     <div className="container mt-md-5 mt-3 mb-7">
       <div className="row">
         <div className="col-md-2">
-          <ProductsCategorySidebar activeAccordion="one" />
+          <ProductsCategorySidebar activeAccordion="three" />
         </div>
         <div className="col-md-10">
           <div className="row">
@@ -66,23 +70,8 @@ function Products() {
         </div>
       </div>
     </div>
-    {/*<div className="bg-light py-4">
-      <div className="container">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
-          <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
-          <div className="input-group w-md-50 mt-md-0 mt-3">
-            <input type="text" className="form-control rounded-0" placeholder="" />
-            <div className="input-group-append">
-              <button className="btn btn-dark rounded-0" type="button" id="search">
-                Lorem ipsum
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>*/}
     </>
   );
 };
 
-export default  Products;
+export default  CategoryGoods;
