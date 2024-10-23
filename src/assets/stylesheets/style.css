@@ -136,7 +136,7 @@ a:visited {
 }
 .carousel-item img {
   object-fit: cover;
-  min-height: 800px;
+  height: 800px;
   width: 100%;
 }
 .carousel-control-prev, .carousel-control-next {
