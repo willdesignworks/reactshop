@@ -14,6 +14,7 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
     "content": "",
     "is_enabled": 1,
     "imageUrl": "",
+    "imagesUrl": ["", "", "", "", ""]
   });
 
   const [, dispatch] = useContext(MessageContext); // Reducer messageStore.js (跨元件傳遞)
@@ -31,18 +32,34 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
         "content": "",
         "is_enabled": 1,
         "imageUrl": "",
+        "imagesUrl": ["", "", "", "", ""]
       });
     } else if (type === 'edit') {
-      setTempData(temProduct);
+      setTempData({
+        ...temProduct,
+        // 確保 imagesUrl 為 undefined，設置預設值為空陣列
+        imagesUrl: Array.isArray(temProduct.imagesUrl) ? temProduct.imagesUrl : ["", "", "", "", ""]
+      });
     }
   }, [type, temProduct])
 
   // 資料寫入
-  const handleChange = (e) => {
+  const handleChange = (e, index = null) => {
 
     const { value, name } = e.target;
 
-    if (['price', 'origin_price'].includes(name)) {
+    // 更新 imagesUrl 陣列中的指定索引
+    if (name === 'imagesUrl') {
+      setTempData(prevData => {
+        const newImagesUrl = [...prevData.imagesUrl]; // 先複製陣列
+        newImagesUrl[index] = value; // 更新指定索引的值
+        return {
+          ...prevData,
+          imagesUrl: newImagesUrl, // 更新 imagesUrl
+        };
+      });
+
+    } else if (['price', 'origin_price'].includes(name)) {
       setTempData({
         ...tempData,
         [name]: Number(value), // 數字型別
@@ -118,7 +135,7 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
               <div className='col-sm-4'>
                 <div className='form-group mb-2'>
                   <label className='w-100' htmlFor='image'>
-                    輸入圖片網址
+                    輸入主圖片網址
                     <input
                       type='text'
                       name='imageUrl'
@@ -127,6 +144,76 @@ function ProductModal({ closeProductModal, getProducts, type, temProduct}) {
                       className='form-control'
                       onChange={handleChange} 
                       value={tempData.imageUrl}
+                    />
+                  </label>
+                </div>
+                <div className='form-group mb-2'>
+                  <label className='w-100' htmlFor='image'>
+                    輸入圖片1網址
+                    <input
+                      type='text'
+                      name='imagesUrl'
+                      id='image0'
+                      placeholder='請輸入圖片連結'
+                      className='form-control'
+                      onChange={(e) => handleChange(e, 0)} // 使用新函數
+                      value={tempData.imagesUrl[0]} // 讀取第一個圖片網址
+                    />
+                  </label>
+                </div>
+                <div className='form-group mb-2'>
+                  <label className='w-100' htmlFor='image'>
+                    輸入圖片2網址
+                    <input
+                      type='text'
+                      name='imagesUrl'
+                      id='image1'
+                      placeholder='請輸入圖片連結'
+                      className='form-control'
+                      onChange={(e) => handleChange(e, 1)} // 使用新函數
+                      value={tempData.imagesUrl[1]} // 讀取第二個圖片網址
+                    />
+                  </label>
+                </div>
+                <div className='form-group mb-2'>
+                  <label className='w-100' htmlFor='image'>
+                    輸入圖片3網址
+                    <input
+                      type='text'
+                      name='imagesUrl'
+                      id='image3'
+                      placeholder='請輸入圖片連結'
+                      className='form-control'
+                      onChange={(e) => handleChange(e, 2)}
+                      value={tempData.imagesUrl[2]}
+                    />
+                  </label>
+                </div>
+                <div className='form-group mb-2'>
+                  <label className='w-100' htmlFor='image'>
+                    輸入圖片4網址
+                    <input
+                      type='text'
+                      name='imagesUrl'
+                      id='image4'
+                      placeholder='請輸入圖片連結'
+                      className='form-control'
+                      onChange={(e) => handleChange(e, 3)}
+                      value={tempData.imagesUrl[3]}
+                    />
+                  </label>
+                </div>
+                <div className='form-group mb-2'>
+                  <label className='w-100' htmlFor='image'>
+                    輸入圖片5網址
+                    <input
+                      type='text'
+                      name='imagesUrl'
+                      id='image5'
+                      placeholder='請輸入圖片連結'
+                      className='form-control'
+                      onChange={(e) => handleChange(e, 4)}
+                      value={tempData.imagesUrl[4]}
                     />
                   </label>
                 </div>

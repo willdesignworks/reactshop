@@ -31,7 +31,7 @@ function Products() {
     <Loading isLoading={isLoading }/>
     <div className="position-relative d-flex align-items-center justify-content-center" style={{minHeight: '400px',}}>
       <div className="position-absolute productstopbg"></div>
-      <h2 className="fw-bold">Lorem ipsum.</h2>
+      {/*<h2 className="fw-bold">Lorem ipsum.</h2>*/}
     </div>
     <div className="container mt-md-5 mt-3 mb-7">
       <div className="row">
@@ -49,7 +49,7 @@ function Products() {
               <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div className="card-body py-0">
                   <ul className="list-unstyled">
-                    <li><a href="#" className="py-2 d-block text-muted">長袖</a></li>
+                    <li><a href="#" className="py-2 d-block text-muted">所有服飾</a></li>
                   </ul>
                 </div>
               </div>
@@ -66,7 +66,7 @@ function Products() {
               <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                 <div className="card-body py-0">
                   <ul className="list-unstyled">
-                    <li><a href="#" className="py-2 d-block text-muted">Lorem ipsum</a></li>
+                    <li><a href="#" className="py-2 d-block text-muted">所有褲子</a></li>
                   </ul>
                 </div>
               </div>
@@ -83,7 +83,7 @@ function Products() {
               <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                 <div className="card-body py-0">
                   <ul className="list-unstyled">
-                    <li><a href="#" className="py-2 d-block text-muted">Lorem ipsum</a></li>
+                    <li><a href="#" className="py-2 d-block text-muted">所有配件</a></li>
                   </ul>
                 </div>
               </div>

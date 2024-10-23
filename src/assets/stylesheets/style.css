@@ -121,9 +121,6 @@ a:visited {
   color: #8d8d8d;
 }
 /*ProductDetail*/
-.ProductDetail .col-md-7 img {
-  padding-right: 35px;
-}
 .ProductDetail .bg-light {
   background-color: #F2F2F2 !important;
 }
@@ -133,6 +130,33 @@ a:visited {
 }
 .ProductDetail .btn:hover svg {
   fill: #fff;
+}
+.carousel {
+  margin-right: 35px;
+}
+.carousel-item img {
+  object-fit: cover;
+  min-height: 800px;
+  width: 100%;
+}
+.carousel-control-prev, .carousel-control-next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8%;
+  padding: 0;
+  color: #a1a1a1;
+  text-align: center;
+  background: none;
+  border: 0;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+  background: rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);*/
 }
 /**/
 .productpromotionstag {

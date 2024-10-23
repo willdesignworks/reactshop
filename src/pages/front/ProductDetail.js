@@ -61,7 +61,7 @@ function ProductDetail() {
     <div className="container ProductDetail">
     <div className="row align-items-center">
         <div className="col-md-7">
-          <img src={product.imageUrl} className="d-block w-100" alt="..." />
+          <Carousel product={product}/>
         </div>
         <div className="col-md-5">
           <RelatedNavbar /*current="Detail"*//>

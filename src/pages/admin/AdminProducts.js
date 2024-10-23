@@ -41,6 +41,7 @@ function AdminProducts() {
     setType(type); // Modal用途
     setTemProduct(product); // 編輯資料
     productModal.current.show();
+    console.log('openProductModal: ', product);
   };
   const closeProductModal = () => {
     productModal.current.hide();
