@@ -1,50 +1,102 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import OrderModal from "../../components/OrderModal";
+import OrderDeleteModal from '../../components/OrderDeleteModal';
 import Pagination from "../../components/Pagination";
 import { Modal } from "bootstrap";
+import Loading from "../../components/Loading"; // react-loading
 
 function AdminOrders() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]); // 所有訂單列表
   const [pagination, setPagination] = useState({});
+  
   // type: 決定 modal 展開的用途
   const [type, setType] = useState('create'); // edit
-  const [tempOrder, setTempOrder] = useState({});
+  const [tempOrder, setTempOrder] = useState({}); // 儲存 選定訂單資料
 
-  const orderModal = useRef(null);
+  const orderModal = useRef(null); // Modal
+  const orderdeleteModal = useRef(null); // Modal
+
+  const [isLoading, setLoading] = useState(false) // react-loading
+
   useEffect(() => {
+    // Modal
     orderModal.current = new Modal('#orderModal', {
       backdrop: 'static',
     });
+    orderdeleteModal.current = new Modal('#orderdeleteModal', {
+      backdrop: 'static',
+    });
 
-    getOrders();
+    getOrders(); // API-取得資料
   }, []);
 
+  // API-取得 訂單資料
   const getOrders = async (page = 1) => {
+    setLoading(true); // react-loading
     const res = await axios.get(
       `/v2/api/${process.env.REACT_APP_API_PATH}/admin/orders?page=${page}`,
     );
-    console.log(res);
+    console.log('訂單列表', res);
     setOrders(res.data.orders);
     setPagination(res.data.pagination);
+    setLoading(false); // react-loading
   }
 
+  //Modal
   const openOrderModal = (order) => {
+    setType(type); // Modal用途
     setTempOrder(order);
     orderModal.current.show();
+    console.log('opneOrderModal', order);
   }
   const closeOrderModal = () => {
     setTempOrder({});
     orderModal.current.hide();
   }
+  const opneOrdeDeleteModal = (order) => {
+    setTempOrder(order);
+    orderdeleteModal.current.show();
+    console.log('opneDeleteModal', order);
+  };
+  const closeOrdeDeleteModal = () => {
+    setTempOrder({});
+    orderdeleteModal.current.hide();
+  };
 
+  // 刪除
+  const deleteOrderModa = async (id) => {
+    try {
+      setLoading(true); // react-loading
+      const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${id}`);
+      if (res.data.success) {
+        getOrders();
+        orderdeleteModal.current.hide();
+        setLoading(false); // react-loading
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className='p-3'>
+      <Loading isLoading={isLoading }/>
       <OrderModal
         closeProductModal={closeOrderModal}
         getOrders={getOrders}
         tempOrder={tempOrder}
       />
+      <OrderDeleteModal 
+        closeOrdeDeleteModal={closeOrdeDeleteModal}
+        text={tempOrder.id} 
+        handleDelete={deleteOrderModa} 
+        id={tempOrder.id}
+        user={tempOrder.user?.name || '未知用戶'}
+        useremail={tempOrder.user?.email || '未知郵件'}
+        usertotal={tempOrder.total}
+        usermessage={tempOrder.message}
+      />
+          <Loading isLoading={isLoading }/>
       <h3>訂單列表</h3>
       <hr />
       <table className='table'>
@@ -91,6 +143,15 @@ function AdminOrders() {
                     }}
                   >
                     查看
+                  </button>
+                  <button
+                    type='button'
+                    className='btn btn-outline-danger btn-sm ms-2'
+                    onClick={() => {
+                      opneOrdeDeleteModal(order);
+                    }}
+                  >
+                    刪除
                   </button>
                 </td>
               </tr>

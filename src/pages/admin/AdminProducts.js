@@ -6,11 +6,12 @@ import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
 
 function AdminProducts() {
-  const [products, setProducts] = useState( [] ); // 商品狀態
+  const [products, setProducts] = useState( [] ); // 所有商品列表
   const [pagination, setPagination] = useState( {} ); // 分頁狀態
   
   const [type, setType] = useState('create'); // Modal用途(類型edit)
-  const [temProduct, setTemProduct] = useState([]); // 編輯資料
+  const [temProduct, setTemProduct] = useState([]); // 儲存 選定編輯資料
+  
   const productModal = useRef(null); // Modal
   const deleteModal = useRef(null); // Modal
 
@@ -26,7 +27,7 @@ function AdminProducts() {
     getProducts(); // API-取得資料
   }, []);
 
-  // API-取得資料
+  // API-取得 商品資料
   const getProducts = async (page = 1) => {
       // API-列表
       const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products?page=${page}`);

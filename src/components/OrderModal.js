@@ -41,7 +41,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
           ...tempData,
         },
       });
-      console.log(res);
+      console.log('OrderModal: ',res);
       handleSuccessMessage(dispatch, res);
       setIsLoading(false);
       getOrders();
