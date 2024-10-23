@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Success() {
   const { orderId } = useParams(); // 付款完成 訂單id
@@ -20,20 +20,25 @@ function Success() {
   return (
     <>
     <div className="container">
-      <div style={{minHeight: '400px', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)',
-      backgroundPosition: 'center center',}}>
+      <div style={{minHeight: '400px', backgroundImage: 'url(https://shoplineimg.com/5b306d4c9a76f01953000055/66c6ca784aa821001fa69482/1200x.webp?source_format=jpg)',
+      backgroundPosition: 'bottom center',backgroundRepeat: 'no-repeat', backgroundSize: 'cover',}}>
       </div>
       <div className="mt-5 mb-7">
         <div className="row">
           <div className="col-md-6">
             <h2>訂單已送出</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea</p>
-            <a href="./index.html" className="btn btn-outline-dark me-2 rounded-0 mb-4">Back To Home</a>
+            <p>
+              感謝您購買本公司的產品，<br/>
+              如果您的送貨地址有更改，請務必來電通知。<br/><br/>
+              若您於7天內沒收到貨品請與本公司聯絡。<br/>
+              再次感謝您!
+            </p>
+            <Link to='/' className="text-nowrap btn btn-dark py-2">回首頁</Link>
           </div>
           <div className="col-md-6">
             <div className="card rounded-0 py-4">
               <div className="card-header border-bottom-0 bg-white px-4 py-0">
-                <h2>Order Detail</h2>
+                <h3>訂單編號：{orderData.id}</h3>
               </div>
               <div className="card-body px-4 py-0">
                 <ul className="list-group list-group-flush">
@@ -65,8 +70,8 @@ function Success() {
                           <td className="text-end border-0 px-0">NT${orderData.total}</td>
                         </tr>
                         <tr>
-                          <th scope="row" className="border-0 px-0 pt-0 font-weight-normal">Payment</th>
-                          <td className="text-end border-0 px-0 pt-0">ApplePay</td>
+                          <th scope="row" className="border-0 px-0 pt-0 font-weight-normal">運費</th>
+                          <td className="text-end border-0 px-0 pt-0">NT$0</td>
                         </tr>
                       </tbody>
                     </table>

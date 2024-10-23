@@ -66,7 +66,7 @@ function ProductDetail() {
         <div className="col-md-5">
           <RelatedNavbar /*current="Detail"*//>
           <h2 className="fw-bold h1 mb-2">{product.title}</h2>
-          <p class="productpromotionstag mb-3">全店，NT4500免運費</p>
+          <p className="productpromotionstag mb-3">全店，NT4500免運費</p>
           <p className="h4 fw-bold" >NT${product.price}</p>
           <div className="row align-items-center">
             <div className="col-12">

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Loading from "../../components/Loading"; // react-loading
+import RelatedProducts from "../../components/RelatedProducts";
 
 function Cart() {
   const { cartData, getCart } = useOutletContext(); // (跨元件傳遞)
@@ -60,7 +61,18 @@ function Cart() {
           <div className="d-flex justify-content-between">
             <h2 className="mt-2">您的購物清單</h2>
           </div>
-          { cartData?.carts?.map((item) => {
+          { cartData?.carts?.length === 0 ? ( 
+            <>
+            <h5 className="mt-2 text-center">購物清單為空</h5>
+            <Link to="/products" className="btn btn-dark btn-block w-100 mt-4 rounded-0 py-3">
+            繼續購物
+            </Link>
+            <h2 className="mt-5">你可能會喜歡的商品</h2>
+            <RelatedProducts />
+            </>
+          ) : (
+            <>
+          {cartData?.carts?.map((item) => {
             return (
               <div className="d-flex mt-4 bg-light" key={item.id}>
                 <img src={item.product.imageUrl} className="object-cover" alt="" style={{width: "120px",}} />
@@ -99,7 +111,7 @@ function Cart() {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
           <table className="table mt-4 text-muted">
             <tbody>
@@ -120,6 +132,8 @@ function Cart() {
           <Link to="/checkout" className="btn btn-dark btn-block w-100 mt-4 rounded-0 py-3">
             確認送出
           </Link>
+          </>
+        )}
         </div>
       </div>
     </div>
