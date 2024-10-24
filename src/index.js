@@ -23,6 +23,11 @@ root.render(
     <App />
     </HashRouter>
   </React.StrictMode>
+  /*<React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>*/
 );
 
 // If you want to start measuring performance in your app, pass a function
