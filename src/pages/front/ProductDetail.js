@@ -150,7 +150,7 @@ function ProductDetail() {
         </div>
       </div>
       <h3 className="fw-bold">你可能會喜歡的商品</h3>
-      <RelatedProducts />
+      <RelatedProducts setIsAddedToCart={setIsAddedToCart}/>
     </div>
     </>
   );

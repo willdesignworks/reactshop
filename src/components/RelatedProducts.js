@@ -7,7 +7,7 @@ import 'swiper/swiper-bundle.css'; // 引入 Swiper 樣式
 
 import { Link } from 'react-router-dom';
 
-function RelatedProducts() {
+function RelatedProducts({ setIsAddedToCart }) {
   const [relatedProducts, setRelatedProducts] = useState([]); // 商品狀態
   const navigate = useNavigate(); // 你可能會喜歡的商品
 
@@ -24,6 +24,7 @@ function RelatedProducts() {
 
   // 你可能會喜歡的商品
   const handleProductClick = (id) => {
+    setIsAddedToCart(false);
     navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
