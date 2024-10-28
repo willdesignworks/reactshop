@@ -86,7 +86,7 @@ function ProductDetail() {
                     <input 
                       type="text" 
                       readOnly 
-                      className="form-control border-0 text-center my-auto shadow-none bg-light" 
+                      className="form-control border-0 text-center shadow-none bg-light" 
                       placeholder="" 
                       aria-label="Example text with button addon" 
                       aria-describedby="button-addon1"
