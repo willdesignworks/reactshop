@@ -12,15 +12,25 @@ function RelatedProducts({ setIsAddedToCart }) {
   const navigate = useNavigate(); // 你可能會喜歡的商品
 
   // API-取得資料
-  const getRelatedProducts = async (id) => {
-    // API-列表
-    const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products`);
-    console.log('RelatedProducts 你可能喜歡:', productRes);
-    setRelatedProducts(productRes.data.products || []);
+  const getRelatedProducts = async (id) =>  {
+    try {
+      // API-列表
+      const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products`);
+      console.log('RelatedProducts 你可能喜歡:', productRes);
+
+      // 過濾掉類別為 '輪播' 的產品
+      const filteredProducts = productRes.data.products.filter(product => product.category !== '輪播');
+
+      setRelatedProducts(filteredProducts || []);
+    } catch (error) {
+      console.error(error);
+    }
+
   };
   useEffect(() => {
     getRelatedProducts();
   }, []);
+
 
   // 你可能會喜歡的商品
   const handleProductClick = (id) => {
@@ -28,6 +38,7 @@ function RelatedProducts({ setIsAddedToCart }) {
     navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
+  
 
   return (
     <>
