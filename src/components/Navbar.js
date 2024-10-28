@@ -55,20 +55,26 @@ function Navbar({ cartData, setCartOpen }) {
 
                 <div className="mobile-menu clearfix d-block d-lg-none">
                   <nav id="mobile_dropdown">
-                    <ul>
+                    <ul className="main__menu">
                       <li>
-                        <a href="index.html">Home</a>
+                        <NavLink to="/" href="index.html">首頁</NavLink>
                       </li>
-                      <li><a href="about.html">About</a></li>
                       <li>
-                        <a href="shop.html">Shop</a>
-                        <ul>
-                          <li><a href="index.html">Home 1</a></li>
-                          <li><a href="index-2.html">Home 2</a></li>
-                          <li><a href="index-3.html">Home 3</a></li>
+                        <NavLink to="about">品牌介紹</NavLink>
+                      </li>
+                      <li className="drop">
+                        <NavLink to="products">全部商品</NavLink>
+                        <ul className="dropdown">
+                          <li><NavLink to="categoryshirts">服飾</NavLink></li>
+                          <li><NavLink to="categorypants">褲子</NavLink></li>
+                          <li><NavLink to="categorygoods">配件</NavLink></li>
                         </ul>
                       </li>
-                      <li><a href="contact.html">contact</a></li>
+                      <li>
+                        <NavLink to="store" className="nav-item me-4 nav-link">
+                          門市資訊
+                        </NavLink>
+                      </li>
                     </ul>
                   </nav>
                 </div>
@@ -94,6 +100,7 @@ function Navbar({ cartData, setCartOpen }) {
                 </ul>
               </div>
             </div>
+            <div className="mobile-menu-area"></div>
           </div>
         </div>
       </header>
