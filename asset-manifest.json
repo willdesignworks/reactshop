@@ -1,18 +1,35 @@
 {
   "files": {
-    "main.css": "/reactshop/static/css/main.ab1753b0.css",
-    "main.js": "/reactshop/static/js/main.ddf0ec8b.js",
+    "main.css": "/reactshop/static/css/main.7ed219e7.css",
+    "main.js": "/reactshop/static/js/main.ced7f2b8.js",
     "static/js/453.99e686b5.chunk.js": "/reactshop/static/js/453.99e686b5.chunk.js",
+    "static/media/themify.svg?-fvbane": "/reactshop/static/media/themify.c4292f34297f1004471a.svg",
     "static/media/bootstrap-icons.woff?": "/reactshop/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
     "static/media/bootstrap-icons.woff2?": "/reactshop/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "static/media/6.jpg": "/reactshop/static/media/6.6c06c638a50249b90423.jpg",
+    "static/media/Material-Design-Iconic-Font.ttf?v=2.2.0": "/reactshop/static/media/Material-Design-Iconic-Font.5a588d6a8bfc41d69f88.ttf",
+    "static/media/themify.eot": "/reactshop/static/media/themify.9bad94440d49256265a5.eot",
+    "static/media/themify.ttf?-fvbane": "/reactshop/static/media/themify.eda8b94308c6f538f04a.ttf",
+    "static/media/themify.woff?-fvbane": "/reactshop/static/media/themify.29b39089170885ae2967.woff",
+    "static/media/Material-Design-Iconic-Font.woff?v=2.2.0": "/reactshop/static/media/Material-Design-Iconic-Font.bd9b02bf1131d90bfe22.woff",
+    "static/media/Material-Design-Iconic-Font.woff2?v=2.2.0": "/reactshop/static/media/Material-Design-Iconic-Font.6ee80f4bf5d3f92f3bf7.woff2",
+    "static/media/2.jpg": "/reactshop/static/media/2.6e48e7ca6cd8967ee7ef.jpg",
+    "static/media/4.jpg": "/reactshop/static/media/4.3758efbacc15e0c5aa80.jpg",
+    "static/media/3.jpg": "/reactshop/static/media/3.349f10b930d714fd13f4.jpg",
+    "static/media/1.jpg": "/reactshop/static/media/1.c8a9851e8cab0ba49281.jpg",
+    "static/media/1.png": "/reactshop/static/media/1.ed014c4b7e66a8ee90ca.png",
+    "static/media/slick.svg": "/reactshop/static/media/slick.7ba97953187dc2907930.svg",
+    "static/media/slick.eot": "/reactshop/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/reactshop/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/reactshop/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/reactshop/index.html",
     "static/media/all.SCSS": "/reactshop/static/media/all.05197054da714b527b77.SCSS",
-    "main.ab1753b0.css.map": "/reactshop/static/css/main.ab1753b0.css.map",
-    "main.ddf0ec8b.js.map": "/reactshop/static/js/main.ddf0ec8b.js.map",
+    "main.7ed219e7.css.map": "/reactshop/static/css/main.7ed219e7.css.map",
+    "main.ced7f2b8.js.map": "/reactshop/static/js/main.ced7f2b8.js.map",
     "453.99e686b5.chunk.js.map": "/reactshop/static/js/453.99e686b5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ab1753b0.css",
-    "static/js/main.ddf0ec8b.js"
+    "static/css/main.7ed219e7.css",
+    "static/js/main.ced7f2b8.js"
   ]
 }
