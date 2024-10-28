@@ -121,7 +121,7 @@ function ProductDetail() {
                   className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-org'} w-100 py-2`} 
                   onClick={() => {
                     addToCar(); // 加入購物車
-                    navigate('Cart'); // 跳轉到購物車
+                    navigate('/cart'); // 跳轉到購物車
                   }}
                   disabled={isproLoading || isAddedToCart}
                   >

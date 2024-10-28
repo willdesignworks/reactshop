@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom';
 function Footer() {
   return (
     <>
-      <footer
-            className="htc__foooter__area"
-            style={{
-                background: "rgba(0, 0, 0, 0) url(images/bg/1.jpg) no-repeat scroll center center / cover",
-            }}
-        >
+      <footer className="htc__foooter__area">
             <div className="container">
                 <div className="row footer__container clearfix">
                     <div className="col-md-6 col-lg-3 col-sm-6">
