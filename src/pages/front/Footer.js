@@ -9,7 +9,7 @@ function Footer() {
                     <div className="col-md-6 col-lg-3 col-sm-6">
                         <div className="ft__widget">
                             <div className="ft__logo">
-                                <Link to="/products">
+                                <Link to="/">
                                     <img src="https://shoplineimg.com/5b306d4c9a76f01953000055/5b309ae210abb98917000900/x140.webp?source_format=png" alt="footer logo" />
                                 </Link>
                             </div>
@@ -70,10 +70,10 @@ function Footer() {
                                       <Link to="/">首頁</Link>
                                     </li>
                                     <li>
-                                      <Link to="about">品牌介紹</Link>
+                                      <Link to="about" onClick={() => window.scrollTo(0, 0)}>品牌介紹</Link>
                                     </li>
                                     <li>
-                                      <Link to="products">全部商品</Link>
+                                      <Link to="products" onClick={() => window.scrollTo(0, 0)}>全部商品</Link>
                                     </li>
                                 </ul>
                             </div>
