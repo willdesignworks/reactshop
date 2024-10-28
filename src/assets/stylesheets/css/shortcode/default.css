@@ -407,7 +407,7 @@ body {
   10. Bg Images
 ----------------------------*/
 
- .bg--1 {
+/* .bg--1 {
   background: rgba(0, 0, 0, 0) url("/src/assets/image/bg/1.jpg") no-repeat fixed 0 0 / cover ;
 }
  .bg--2 {
@@ -418,7 +418,7 @@ body {
 }
  .bg--4 {
   background: rgba(0, 0, 0, 0) url("/src/assets/image/bg/6.jpg") no-repeat scroll center center / cover ;
-}
+}*/
 
 /*----------------------------
   11. Background overlay 
