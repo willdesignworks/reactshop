@@ -58,99 +58,101 @@ function ProductDetail() {
   return (
     <>
     <Loading isLoading={ isLoading }/>
-    <div className="container ProductDetail">
-    <div className="row align-items-center">
-        <div className="col-md-7">
-          <Carousel product={product}/>
-        </div>
-        <div className="col-md-5">
-          <RelatedNavbar /*current="Detail"*//>
-          <h2 className="fw-bold h1 mb-2">{product.title}</h2>
-          <p className="productpromotionstag mb-3">全店，NT4500免運費</p>
-          <p className="h4 fw-bold" >NT${product.price}</p>
-          <div className="row align-items-center">
-            <div className="col-12">
-              <p className="mt-5">數量</p>
-              <div className="input-group my-3 bg-light rounded">
-                <div className="input-group-prepend">
-                  <button 
-                    className="btn btn-outline-dark border-0 py-2" 
-                    type="button" 
-                    id="button-addon1"
-                    onClick={() => setcarQuantity((pre) => pre === 1 ? pre : pre - 1)}
+    <div className="cart-main-area bg__white">
+        <div className="container ProductDetail">
+        <div className="row align-items-center">
+            <div className="col-md-7">
+              <Carousel product={product}/>
+            </div>
+            <div className="col-md-5">
+              <RelatedNavbar /*current="Detail"*//>
+              <h2 className="fw-bold h1 mb-2">{product.title}</h2>
+              <p className="productpromotionstag mb-3">全店，NT4500免運費</p>
+              <p className="h4 fw-bold" >NT ${product.price}</p>
+              <div className="row align-items-center">
+                <div className="col-12">
+                  <p className="mt-5">數量</p>
+                  <div className="input-group my-3 bg-light rounded">
+                    <div className="input-group-prepend">
+                      <button 
+                        className="btn btn-outline-dark border-0 py-2" 
+                        type="button" 
+                        id="button-addon1"
+                        onClick={() => setcarQuantity((pre) => pre === 1 ? pre : pre - 1)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 11H5V13H19V11Z"></path></svg>
+                      </button>
+                    </div>
+                    <input 
+                      type="text" 
+                      readOnly 
+                      className="form-control border-0 text-center my-auto shadow-none bg-light" 
+                      placeholder="" 
+                      aria-label="Example text with button addon" 
+                      aria-describedby="button-addon1"
+                      value={carQuantity}
+                    />
+                    <div className="input-group-prepend">
+                      <button 
+                        className="btn btn-outline-dark border-0 py-2"
+                        type="button" 
+                        id="button-addon2"
+                        onClick={() => setcarQuantity((pre) => pre + 1)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+                      </button>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div className="col-6">
+                  <button
+                  type="button" 
+                  className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-dark'} w-100 py-2`} 
+                  onClick={isAddedToCart ? null : addToCar} 
+                  disabled={isproLoading || isAddedToCart}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 11H5V13H19V11Z"></path></svg>
+                  {isAddedToCart ? '已加入購物車' : '加入購物車'}
                   </button>
                 </div>
-                <input 
-                  type="text" 
-                  readOnly 
-                  className="form-control border-0 text-center my-auto shadow-none bg-light" 
-                  placeholder="" 
-                  aria-label="Example text with button addon" 
-                  aria-describedby="button-addon1"
-                  value={carQuantity}
-                />
-                <div className="input-group-append">
-                  <button 
-                    className="btn btn-outline-dark border-0 py-2"
-                    type="button" 
-                    id="button-addon2"
-                    onClick={() => setcarQuantity((pre) => pre + 1)}
+                <div className="col-6">
+                  <button
+                  type="button" 
+                  className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-org'} w-100 py-2`} 
+                  onClick={() => {
+                    addToCar(); // 加入購物車
+                    navigate('/Checkout'); // 跳轉到購物車
+                  }}
+                  disabled={isproLoading || isAddedToCart}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+                  {isAddedToCart ? '已經購買' : '立即購買'}
+                    
                   </button>
                 </div>
               </div>
-              
-            </div>
-            <div className="col-6">
-              <button
-               type="button" 
-               className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-dark'} w-100 py-2`} 
-               onClick={isAddedToCart ? null : addToCar} 
-               disabled={isproLoading || isAddedToCart}
-              >
-              {isAddedToCart ? '已加入購物車' : '加入購物車'}
-              </button>
-            </div>
-            <div className="col-6">
-              <button
-               type="button" 
-               className={`text-nowrap btn ${isAddedToCart ? 'btn-secondary' : 'btn-org'} w-100 py-2`} 
-               onClick={() => {
-                addToCar(); // 加入購物車
-                navigate('/Checkout'); // 跳轉到購物車
-              }}
-               disabled={isproLoading || isAddedToCart}
-              >
-              {isAddedToCart ? '已經購買' : '立即購買'}
-                
-              </button>
+              <div className="deliveryoption">
+                <h5>送貨方式</h5>
+                <ul>
+                  <li>7-11 取貨付款(3-5天)</li>
+                  <li>7-11 純取貨(3-5天)</li>
+                  <li>全家 取貨付款(3-5天)</li>
+                  <li>全家 純取貨(3-5天)</li>
+                  <li>新竹物流 運費NT130 (約3-5天)</li>
+                  <li>順豐快遞(中國大陸)(3-5天)</li>
+                  <li>順豐快遞(香港)(3-5天)</li>
+                  <li>順豐快遞(澳門)(3-5天)</li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div className="deliveryoption">
-            <h5>送貨方式</h5>
-            <ul>
-              <li>7-11 取貨付款(3-5天)</li>
-              <li>7-11 純取貨(3-5天)</li>
-              <li>全家 取貨付款(3-5天)</li>
-              <li>全家 純取貨(3-5天)</li>
-              <li>新竹物流 運費NT130 (約3-5天)</li>
-              <li>順豐快遞(中國大陸)(3-5天)</li>
-              <li>順豐快遞(香港)(3-5天)</li>
-              <li>順豐快遞(澳門)(3-5天)</li>
-            </ul>
+          <div className="row my-5">
+            <div className="col-md-12">
+              <div dangerouslySetInnerHTML={{ __html: product.content }} />
+            </div>
           </div>
+          <h3 className="fw-bold">您可能會喜歡的商品</h3>
+          <RelatedProducts setIsAddedToCart={setIsAddedToCart}/>
         </div>
-      </div>
-      <div className="row my-5">
-        <div className="col-md-12">
-          <div dangerouslySetInnerHTML={{ __html: product.content }} />
-        </div>
-      </div>
-      <h3 className="fw-bold">你可能會喜歡的商品</h3>
-      <RelatedProducts setIsAddedToCart={setIsAddedToCart}/>
     </div>
     </>
   );

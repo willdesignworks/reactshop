@@ -1,10 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// import $ from 'jquery'; jQuery 必须在 Bootstrap 之前引入
 // bootstrap
 import 'bootstrap/scss/bootstrap.scss';
+import 'bootstrap/dist/js/bootstrap.bundle';
 import './assets/stylesheets/all.SCSS';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/js/bootstrap.js'
+
+// css
+import "./assets/stylesheets/css/plugins.css"
+import "./assets/stylesheets/css/shortcode/shortcodes.css"
+import "./assets/stylesheets/css/style.css"
+import "./assets/stylesheets/css/responsive.css"
+import "./assets/stylesheets/css/custom.css"
 
 import "./assets/stylesheets/style.css"
 
@@ -27,7 +36,7 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>*//**/
+  </React.StrictMode>*/
 );
 
 // If you want to start measuring performance in your app, pass a function

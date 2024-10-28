@@ -14,18 +14,22 @@ import Success from "./pages/front/Success";
 import CategoryGoods from "./pages/front/CategoryGoods";
 import CategoryShirts from "./pages/front/CategoryShirts";
 import CategoryPants from "./pages/front/CategoryPants";
+import About from "./pages/front/About";
+import Store from "./pages/front/Store";
 function App() {
 
   return (
     <div className="App">
       <Routes>
         <Route path='/' element={ <FrontLayout/> }>
-          <Route path="" element={<Home/>}></Route>
+          <Route index element={<Home/>}></Route>
+          <Route path="about" element={<About />}></Route>
           <Route path="products" element={<Products/>}></Route>
           <Route path="product/:id" element={<ProductDetail/>}></Route>
           <Route path="categorygoods" element={<CategoryGoods />}></Route>
           <Route path="categoryshirts" element={<CategoryShirts />}></Route>
           <Route path="categorypants" element={<CategoryPants />}></Route>
+          <Route path="store" element={<Store/>}></Route>
           <Route path="cart" element={<Cart/>}></Route>
           <Route path="checkout" element={<Checkout/>}></Route>
           <Route path="success/:orderId" element={<Success/>}></Route>

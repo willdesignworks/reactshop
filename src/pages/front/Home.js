@@ -1,98 +1,185 @@
-import { Link } from "react-router-dom";
-import RelatedProducts from "../../components/RelatedProducts";
+import { useState, useEffect, useRef } from 'react';
+import { useOutletContext } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import 'bootstrap';
+import { Modal } from "bootstrap";
+import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 動畫
+import Loading from '../../components/Loading'; // react-loading
+import FrontProductModal from '../../components/FrontProductModal';
+import HomeBanner from '../../components/HomeBanner';
 
 function Home() {
+
+  const [products, setProducts] = useState([]); // 商品狀態
+  const [isLoading, setLoading] = useState(false); // react-loading
+  const [selectedCategory, setSelectedCategory] = useState('*'); // 預設選取的類別為所有
+  const [selectedProduct, setSelectedProduct] = useState({}); // 選取的產品
+  const { getCart, product } = useOutletContext(); // 訂單-數量 (跨元件傳遞)
+  const navigate = useNavigate(); // 轉址
+  const productModal = useRef(null); // Modal
+
+  // API-取得資料
+  const getProducts = async () => {
+    try {
+      setLoading(true); // react-loading
+      const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`);
+      setProducts(productRes.data.products);
+      setLoading(false); // react-loading
+    } catch (error) {
+      setLoading(false);
+      console.error('API 请求错误:', error);
+    } finally {
+      setLoading(false); // react-loading
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+    productModal.current = new Modal('#productModal', {
+      //backdrop: 'static',  背景關閉
+    });
+
+  }, []);
+
+  // API-寫入購物車
+  const addToCar = async (product) => {
+    const data = {
+      data: {
+        product_id: product.id,
+        qty: 1,
+      },
+    };
+  
+    try {
+      setLoading(true); // react-loading
+      const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`, data,);
+      console.log('Detail 訂單:', res);
+      getCart(); // 訂單-數量 (跨元件傳遞)
+      closeProductModal();
+      window.scrollTo(0, 0);
+      navigate(`cart`);
+      setLoading(false); // react-loading
+    } catch(error) {
+      setLoading(false); // react-loading
+      console.log(error);
+    };
+  }
+
+  //Modal
+  const openProductModal = (product) => {
+    setSelectedProduct(product);
+    productModal.current.show();
+  };
+  const closeProductModal = () => {
+    productModal.current.hide();
+  };
+
+  //category
+  const handleFilter = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const filteredProducts = selectedCategory === '*' 
+    ? products.filter(product => product.category !== '輪播')
+    : products.filter(product => product.category === selectedCategory); // 根據選取的類別過濾商品
+
   return (
     <>
-    <div className="position-relative">
-      <div className="position-absolute indextopbg"></div>
+      <Loading isLoading={isLoading} />
+      <FrontProductModal 
+        closeProductModal={closeProductModal}
+        product={selectedProduct}
+        getCart={getCart}
+      />
+      {/* Start banner */}
+      <HomeBanner />
+      {/* End banner */}
 
-      <div className="container d-flex flex-column" style={{minHeight: '100vh',}}>
-        <div className="row justify-content-center my-auto">
-            <div className="col-md-4 text-center">
-              <h2>Lorem ipsum.</h2>
-              <p className="text-muted mb-0">此為範例網站, 不會有真的購物行為</p>
-              <Link to='/products' className="btn btn-dark rounded-0 mt-6">
-              選購商品
-              </Link>
-            </div>
-        </div>
-      </div>
-    </div>
-    <div className="container">
-      <div className="row mt-5">
-        <RelatedProducts />
-      </div>
-    </div>
-    <div className="bg-light mt-7">
-      <div className="container">
-              <div className="row justify-content-center py-7">
-                <div className="col-md-6 text-center">
-                  <p className="my-2">
-                  XRAGE（エックスレージ）は2014年に渋谷で立ち上げたブランドであり、
-                  </p>
-                  <p className="my-2">
-                  「仲間」を要素に、日本・台湾のデザイナーと共に持ちつづけるものである。
-                  </p>
-                  <p className="my-2">
-                  漢字をモチーフにし、和風スタイルの強さを表すことを心掛けています。
-                  </p><br/><br/>
-                  <p className="my-2">
-                  XRAGE（エックスレージ）2014年於東京澀谷成立，集結日本、台灣設計師共同創作。
-                  </p>
-                  <p className="my-2">
-                  日文夥伴「仲間(なかま)」為品牌精神標語，擅長以漢字為設計元素，展現強烈日式風格，將傳統與當代流行為結合。
-                  </p>
-                  <p className="my-4"><small>—XRAGE（エックスレージ）—</small></p>
+      {/* Start Our Product */}
+      <section className="htc__product__area ptb--130 bg__white">
+        <div className="container">
+          <div className="htc__product__container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="product__menu">
+                  <button onClick={() => handleFilter('*')} className={selectedCategory === '*' ? 'is-checked' : ''}>所有</button>
+                  <button onClick={() => handleFilter('服飾')} className={selectedCategory === '衣服' ? 'is-checked' : ''}>衣服</button>
+                  <button onClick={() => handleFilter('褲子')} className={selectedCategory === '裤子' ? 'is-checked' : ''}>裤子</button>
+                  <button onClick={() => handleFilter('配件')} className={selectedCategory === '配件' ? 'is-checked' : ''}>配件</button>
                 </div>
               </div>
             </div>
-    </div>
-    <div className="container my-7">
-      <div className="row">
-        <div className="col-md-6">
-          <img src="https://shoplineimg.com/5b306d4c9a76f01953000055/66fa7300ed6d0e000ff213d0/800x.webp?source_format=jpeg" alt="" className="img-fluid" />
-        </div>
-        <div className="col-md-4 m-auto text-center">
-          <h4 className="mt-4">黃金櫃斜相機包&千年積木包</h4>
-          <p className="text-muted">
-          《遊戲王》卡牌遊戲25週年紀念！睽違三年再度聯名！ <br/>
-          獨家推出大量經典卡牌核心設計服飾<br/>
-          以世界第一的刺繡技術呈現絕佳的視覺效果<br/>
-          一起回到那年手握著卡片與決鬥者對戰的美好回憶裡。
-          </p>
-        </div>
-      </div>
-      <div className="row flex-row-reverse justify-content-between mt-4">
-        <div className="col-md-6">
-          <img src="https://shoplineimg.com/5b306d4c9a76f01953000055/66cc438741ebc900193018fc/800x.webp?source_format=jpg" alt="" className="img-fluid" />
-        </div>
-        <div className="col-md-4 m-auto text-center">
-          <h4 className="mt-4">泡泡龍 橫須賀刺繡外套</h4>
-          <p className="text-muted">
-          「泡泡龍」是1986年由日本TAITO公司所推出的電子遊戲<br/>
-          主角為被魔法變成可愛恐龍的雙胞胎：<br/>
-          巴比與波比 吐著泡泡擊敗各式敵人<br/>
-          XRAGE將8位元復古風格以細緻刺繡呈現遊戲經典場景。
-          </p>
-        </div>
-      </div>
-    </div>
-    {/*<div className="bg-light py-4">
-      <div className="container">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
-          <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
-          <div className="input-group w-md-50 mt-md-0 mt-3">
-            <input type="text" className="form-control rounded-0" placeholder="" />
-            <div className="input-group-append">
-              <button className="btn btn-dark rounded-0" type="button" id="search">
-                Lorem ipsum
-              </button>
-            </div>
+
+            <AnimatePresence>
+              <div className="row product__list foo">
+                {filteredProducts.map(product => (
+                  <motion.div
+                  key={product.id}
+                  layout // 佈局改變時自動進行動畫過渡
+                  initial={{ opacity: 0, scale: 0.9, }} // 初始
+                  animate={{ opacity: 1, scale: 1, }} // 顯示
+                  exit={{ opacity: 0, scale: 0.9, }} // 退出
+                  transition={{ duration: 0.3 }} // 動畫時間
+                  className={`col-md-3 single__pro col-lg-3 col-md-4 ${product.category} col-sm-12`}
+                >
+                  <div className="product">
+                    <div className="product__inner">
+                      <div className="pro__thumb">
+                        <Link
+                          onClick={(e) => {
+                            e.preventDefault();
+                          }}
+                        >
+                          <img src={product.imageUrl} alt="product images" />
+                        </Link>
+                      </div>
+                      <div className="product__hover__info">
+                        <ul className="product__action">
+                          <li>
+                            <Link title="Quick View" className="quick-view modal-view detail-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              openProductModal(product);
+                            }}
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
+                              </svg>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link title="Add TO Cart" to="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                addToCar(product); // 加入購物車
+                              }}
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M4.00436 6.41686L0.761719 3.17422L2.17593 1.76001L5.41857 5.00265H20.6603C21.2126 5.00265 21.6603 5.45037 21.6603 6.00265C21.6603 6.09997 21.6461 6.19678 21.6182 6.29L19.2182 14.29C19.0913 14.713 18.7019 15.0027 18.2603 15.0027H6.00436V17.0027H17.0044V19.0027H5.00436C4.45207 19.0027 4.00436 18.5549 4.00436 18.0027V6.41686ZM6.00436 7.00265V13.0027H17.5163L19.3163 7.00265H6.00436ZM5.50436 23.0027C4.67593 23.0027 4.00436 22.3311 4.00436 21.5027C4.00436 20.6742 4.67593 20.0027 5.50436 20.0027C6.33279 20.0027 7.00436 20.6742 7.00436 21.5027C7.00436 22.3311 6.33279 23.0027 5.50436 23.0027ZM17.5044 23.0027C16.6759 23.0027 16.0044 22.3311 16.0044 21.5027C16.0044 20.6742 16.6759 20.0027 17.5044 20.0027C18.3328 20.0027 19.0044 20.6742 19.0044 21.5027C19.0044 22.3311 18.3328 23.0027 17.5044 23.0027Z"></path>
+                              </svg>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="product__details">
+                      <h2>
+                        <Link to="/product-details">{product.title}</Link>
+                      </h2>
+                      <ul className="product__price">
+                        <li className="new__price">NT ${product.price}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </motion.div>
+                ))}
+              </div>
+            </AnimatePresence>
           </div>
         </div>
-      </div>
-    </div>*/}
+      </section>
+      {/* End Our Product */}
     </>
   );
 };

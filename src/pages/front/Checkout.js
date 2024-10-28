@@ -1,11 +1,11 @@
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import RelatedProducts from "../../components/RelatedProducts";
 
  // react-hook-form
 import { useForm } from 'react-hook-form';
 import { Input } from '../../components/FormElements';
 import { Textarea } from '../../components/FormElements';
-
 
 function Checkout () {
   const { cartData } = useOutletContext(); // 取得 購物車資料
@@ -45,12 +45,38 @@ function Checkout () {
 
   return (
     <>
+    <div className="ht__bradcaump__area">
+            <div className="ht__bradcaump__wrap">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="bradcaump__inner text-center">
+                                <h2 className="bradcaump-title">訂單資料</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <section className="our-checkout-area ptb--120 bg__white">
     <div className='container'>
-      <div className='row justify-content-center'>
-        <div className='col-md-10'>
-          <h3 className='fw-bold mb-4 pt-3'>訂單資料</h3>
-        </div>
-      </div>
+    { cartData?.carts?.length === 0 ? ( 
+      <>
+        <div className='row'>
+                          <div className="col-md-10 col-sm-12 col-12 no-list">  
+                            <div className="cartempty">
+                              <h5 className="mt-2 text-center">購物清單為空</h5>
+                            </div>
+                            <Link to="/products" className="btn btn-dark btn-block w-50 mt-4 rounded-0 py-3">
+                            繼續購物
+                            </Link>
+                            <h2 className="mt-5">你可能會喜歡的商品</h2>
+                            <RelatedProducts />
+                          </div>
+        </div>                
+      </>
+    ) : (
+    <>
       <div className='row flex-row-reverse justify-content-center pb-5'>
         <div className='col-md-4'>
           <div className='border p-4 mb-4'>
@@ -62,9 +88,9 @@ function Checkout () {
                   <div className='w-100'>
                     <div className='d-flex justify-content-between'>
                       <p className='mb-0 fw-bold'>{item.product.title}</p>
-                      <p className='mb-0'>NT$ {item.product.price}</p>
+                      <p className='mb-0'>NT${item.product.price}</p>
                     </div>
-                    <p className='mb-0 fw-bold'>x{item.qty}</p>
+                    <p className='mb-0 fw-bold'>數量:{item.qty}</p>
                   </div>
                 </div>
               )
@@ -73,17 +99,17 @@ function Checkout () {
               <tbody>
                 <tr>
                   <th scope='row' className='border-0 px-0 pt-4 font-weight-normal'>小計</th>
-                  <td className='text-end border-0 px-0 pt-4'>NT$ {cartData.final_total}</td>
+                  <td className='text-end border-0 px-0 pt-4'>NT${cartData.final_total}</td>
                 </tr>
                 <tr>
                   <th scope='row' className='border-0 px-0 pt-0 pb-4 font-weight-normal'>運費</th>
-                  <td className='text-end border-0 px-0 pt-0 pb-4'>NT$ 0</td>
+                  <td className='text-end border-0 px-0 pt-0 pb-4'>NT$0</td>
                 </tr>
               </tbody>
             </table>
             <div className='d-flex justify-content-between mt-4'>
               <p className='mb-0 h4 fw-bold'>總金額</p>
-              <p className='mb-0 h4 fw-bold'>NT$ {cartData.final_total}</p>
+              <p className='mb-0 h4 fw-bold'>NT${cartData.final_total}</p>
             </div>
           </div>
         </div>
@@ -174,12 +200,15 @@ function Checkout () {
                 <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m15 19-7-7 7-7'/>
               </svg> 繼續購物
             </Link>
-            <button type='submit' className='btn btn-dark py-3 px-7'>送出訂單</button>
+            <button type='submit' className='btn btn-dark py-3 px-7'>填寫完成</button>
           </div>
           </form>
         </div>
       </div>
+    </>
+    )}
     </div>
+    </section>
     </>
   );
 };

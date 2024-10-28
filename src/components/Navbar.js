@@ -1,32 +1,105 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
-function Navbar({ cartData }) {
+function Navbar({ cartData, setCartOpen }) {
+
+  const location = useLocation();
+
   return (
     <>
-     <div className="container">
-        <nav className="navbar navbar-expand-lg navbar-light">
-          <NavLink className="navbar-brand" to="/">XRAGE</NavLink>
-          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <NavLink className="nav-item nav-link me-4 active" to="/">
-                首頁
-              </NavLink>
-              <NavLink className="nav-item nav-link me-4" to="/products">
-                產品列表
-              </NavLink>
-              {/*<a className="nav-item nav-link me-4" href="./detail.html">Detail</a>*/}
-              <NavLink className="nav-item nav-link position-relative" to="/cart">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.00436 6.41686L0.761719 3.17422L2.17593 1.76001L5.41857 5.00265H20.6603C21.2126 5.00265 21.6603 5.45037 21.6603 6.00265C21.6603 6.09997 21.6461 6.19678 21.6182 6.29L19.2182 14.29C19.0913 14.713 18.7019 15.0027 18.2603 15.0027H6.00436V17.0027H17.0044V19.0027H5.00436C4.45207 19.0027 4.00436 18.5549 4.00436 18.0027V6.41686ZM5.50436 23.0027C4.67593 23.0027 4.00436 22.3311 4.00436 21.5027C4.00436 20.6742 4.67593 20.0027 5.50436 20.0027C6.33279 20.0027 7.00436 20.6742 7.00436 21.5027C7.00436 22.3311 6.33279 23.0027 5.50436 23.0027ZM17.5044 23.0027C16.6759 23.0027 16.0044 22.3311 16.0044 21.5027C16.0044 20.6742 16.6759 20.0027 17.5044 20.0027C18.3328 20.0027 19.0044 20.6742 19.0044 21.5027C19.0044 22.3311 18.3328 23.0027 17.5044 23.0027Z"></path></svg>
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {cartData?.carts?.length}
-                </span>
-              </NavLink>
+      <header
+        id="header"
+        className={`htc-header ${location.pathname === "/" ? "" : "header--3 bg__white"}`}
+      >
+        {/* Start Mainmenu Area */}
+        <div id="sticky-header-with-topbar" className="mainmenu__area sticky__header">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-md-2 col-lg-2 col-6">
+                <div className="logo">
+                  <NavLink to="/" className="nav-item me-4 nav-link">
+                    <img src="https://s3cdn.yourator.co/companies/logos/000/001/468/thumb/e9c47e97d18d84edf8913f88d720a9f5e7fb562f.png" alt="logo images" />
+                  </NavLink>
+                </div>
+              </div>
+              {/* Start Mainmenu Area */}
+              <div className="col-md-8 col-lg-8 d-none d-md-block">
+                <nav className="mainmenu__nav">
+                  <ul className="main__menu">
+                    <li>
+                      <NavLink to="/" className="nav-item me-4 nav-link">
+                        首頁
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="about" className="nav-item me-4 nav-link">
+                        品牌介紹
+                      </NavLink>
+                    </li>
+                    <li className="drop">
+                      <NavLink to="products" className="nav-item me-4 nav-link">
+                        全部商品
+                      </NavLink>
+                      <ul className="dropdown">
+                        <li><NavLink to="categoryshirts">服飾</NavLink></li>
+                        <li><NavLink to="categorypants">褲子</NavLink></li>
+                        <li><NavLink to="categorygoods">配件</NavLink></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <NavLink to="store" className="nav-item me-4 nav-link">
+                        門市資訊
+                      </NavLink>
+                    </li>
+                  </ul>
+                </nav>
+
+                <div className="mobile-menu clearfix d-block d-lg-none">
+                  <nav id="mobile_dropdown">
+                    <ul>
+                      <li>
+                        <a href="index.html">Home</a>
+                      </li>
+                      <li><a href="about.html">About</a></li>
+                      <li>
+                        <a href="shop.html">Shop</a>
+                        <ul>
+                          <li><a href="index.html">Home 1</a></li>
+                          <li><a href="index-2.html">Home 2</a></li>
+                          <li><a href="index-3.html">Home 3</a></li>
+                        </ul>
+                      </li>
+                      <li><a href="contact.html">contact</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+              {/* End Mainmenu Area */}
+              <div className="col-md-2 col-lg-2 col-6">  
+                <ul className="menu-extra">
+                  <li>
+                    <NavLink to="/login" >
+                    <span className="ti-user"></span>
+                    </NavLink>
+                  </li>
+                  <li className="cart__menu position-relative"
+                    onClick={() => setCartOpen(prev => !prev)}
+                  >
+                    <span className="ti-shopping-cart"></span>
+                    {cartData?.carts?.length > 0 && (
+                      <span className="bootstarplength">
+                        {cartData.carts.length}
+                      </span>
+                    )}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </nav>
-      </div>
+        </div>
+      </header>
+      <div className="body__overlay"></div>
     </>
   );
-};
+}
 
 export default Navbar;
