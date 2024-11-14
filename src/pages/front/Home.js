@@ -101,7 +101,6 @@ function Home() {
         <div className="container">
           <div className="htc__product__container">
             <div className="row">
-            <div className="col-md-12">此網站是範例, 並沒有真正的購物行為</div>
               <div className="col-md-12">
                 <div className="product__menu">
                   <button onClick={() => handleFilter('*')} className={selectedCategory === '*' ? 'is-checked' : ''}>所有</button>
