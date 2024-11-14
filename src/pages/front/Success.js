@@ -44,6 +44,7 @@ function Success() {
                 若您於7天內沒收到貨品請與本公司聯絡。<br/>
                 再次感謝您!
               </p>
+              <p>此網站是範例, 並沒有真正的購物行為</p>
               <Link to='/' className="text-nowrap btn btn-dark py-2">回首頁</Link>
             </div>
             <div className="col-md-6">

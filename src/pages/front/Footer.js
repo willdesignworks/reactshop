@@ -63,7 +63,7 @@ function Footer() {
                         <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                             <div className="copyright__inner">
                                 <div className="copyright">
-                                    <p>COPYRIGHT © 2024 XRAGE CO., LTD. ALL RIGHTS RESERVED.</p>
+                                    <p>COPYRIGHT © 2024 XRAGE CO., LTD. ALL RIGHTS RESERVED.此網站是範例, 並沒有真正的購物行為</p>
                                 </div>
                                 <ul className="footer__menu">
                                     <li>
