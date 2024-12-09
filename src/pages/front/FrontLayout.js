@@ -5,6 +5,7 @@ import { motion, useAnimation } from "framer-motion";
 import Navbar from "../../components/Navbar";
 import OffsetWrapper from "../../components/OffsetWrapper";
 import Loading from "../../components/Loading"; // react-loading
+import MessageToast from '../../components/MessageToast'; // Redux Toolkit
 import Footer from "./Footer";
 
 function FrontLayout() {
@@ -74,7 +75,8 @@ function FrontLayout() {
   return (
     <>
     <div className="wrapper fixed__footer" style={{ marginBottom: `${marginBottom}px` }}>
-      <Loading isLoading={isLoading }/>
+      <Loading isLoading={isLoading }/> {/*Reducer 跨元件傳遞*/}
+      <MessageToast />  {/*Redux Toolkit*/}
       <Navbar 
         cartData={cartData}
         setCartOpen={setCartOpen}

@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import $ from 'jquery'; jQuery 必须在 Bootstrap 之前引入
+
+// Redux Toolkit
+import { store } from './store';
+import { Provider } from 'react-redux';
+
 // bootstrap
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap/dist/js/bootstrap.bundle';
@@ -25,11 +29,14 @@ import { HashRouter } from 'react-router-dom';
 import axios from 'axios';
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <HashRouter>
-    <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </HashRouter>
   </React.StrictMode>
   /*<React.StrictMode>

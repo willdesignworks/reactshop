@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";  // Redux Toolkit
+import { createAsyncMessage } from '../../slice/messageSlice'  // Redux Toolkit
+
 import RelatedProducts from "../../components/RelatedProducts";
 import RelatedNavbar from "../../components/RelatedNavbar";
 import Carousel from "../../components/Carousel";
-import Loading from "../../components/Loading"; // react-loading
+import Loading from "../../components/Loading";  // react-loading
 
 function ProductDetail() {
   window.scrollTo(0, 0);
@@ -13,7 +16,8 @@ function ProductDetail() {
   const [isproLoading, setIsproLoading] = useState(false); // 商品-讀取
   const [isAddedToCart, setIsAddedToCart] = useState(false); // 商品是否已加入購物車
   const { getCart } = useOutletContext(); // 訂單-數量 (跨元件傳遞)
-  const [isLoading, setLoading] = useState(false) // react-loading
+  const [isLoading, setLoading] = useState(false); // react-loading
+  const dispatch = useDispatch(); // 啟用 Redux Toolkit
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -34,20 +38,26 @@ function ProductDetail() {
   const addToCar = async () => {
     const data = {
       data: {
-        product_id: product.id,
-        qty: carQuantity,
+        product_id: product.id, // 商品id
+        qty: carQuantity, // 商品數量
       },
     };
     setIsproLoading(true);
     try {
       const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`, data,);
       console.log('Detail 訂單:', res);
+
+      dispatch(createAsyncMessage(res.data)); // 加入完成訊息 (Redux Toolkit)
+      
       getCart(); // 訂單-數量 (跨元件傳遞)
       setIsAddedToCart(true); // 標記商品已加入購物車
       setIsproLoading(false);
+      
     } catch(error) {
       console.log(error);
       setIsproLoading(false);
+
+      dispatch(createAsyncMessage(error.response.data)); // 加入失敗訊息 (Redux Toolkit)
     };
   }
 

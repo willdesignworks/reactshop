@@ -1,22 +1,29 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";  // Redux Toolkit
+import { createAsyncMessage } from '../slice/messageSlice'  // Redux Toolkit
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading"; // react-loading
 
 function OffsetWrapper({ isCartOpen, setCartOpen, cartData, getCart }) {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false) // react-loading
+  const dispatch = useDispatch(); // 啟用 Redux Toolkit
 
   // API-刪除訂單
   const removeCartItem = async (id) => {
     try {
       setLoading(true); // react-loading
       const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`);
+      
+      dispatch(createAsyncMessage(res.data)); // 刪除訊息 (Redux Toolkit)
+      
       getCart();
       setLoading(false); // react-loading
     } catch (error) {
       console.log(error);
+      dispatch(createAsyncMessage(error.response.data)); // 加入失敗訊息 (Redux Toolkit)
     };
   };
 

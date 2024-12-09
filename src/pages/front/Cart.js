@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import { useDispatch } from "react-redux";  // Redux Toolkit
+import { createAsyncMessage } from '../../slice/messageSlice'  // Redux Toolkit
 import Loading from "../../components/Loading"; // react-loading
 import RelatedProducts from "../../components/RelatedProducts";
 
@@ -10,18 +12,24 @@ function Cart() {
 
   const [loadingItems, setLoadingItem] = useState([]); // 正在更新數量的品項 避免重新選取 (disabled)
   const [isLoading, setLoading] = useState(false) // react-loading
+  const dispatch = useDispatch(); // 啟用 Redux Toolkit
 
   // API-刪除訂單
   const removeCartItem = async (id) => {
     try {
       setLoading(true); // react-loading
       const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`);
+
+      dispatch(createAsyncMessage(res.data)); // 刪除訊息 (Redux Toolkit)
+
       getCart();
       console.log('car 刪除',res);
       setLoading(false); // react-loading
     } catch (error) {
       setLoading(false); // react-loading
       console.log(error);
+
+      dispatch(createAsyncMessage(error.response.data)); // 加入失敗訊息 (Redux Toolkit)
     };
   };
 
@@ -46,11 +54,21 @@ function Cart() {
         loadingItems.filter((loadingObject) => loadingObject !== item.id),
       );
 
+      dispatch(createAsyncMessage(res.data)); // 加入完成訊息 (Redux Toolkit)
+
       getCart();
       setLoading(false); // react-loading
+      
     } catch (error) {
+
       setLoading(false); // react-loading
       console.log(error);
+
+      dispatch(createAsyncMessage(error.response.data)); // 加入失敗訊息 (Redux Toolkit)
+
+      setLoadingItem(// 避免重新選取
+        loadingItems.filter((loadingObject) => loadingObject !== item.id),
+      );
     };
 
   };

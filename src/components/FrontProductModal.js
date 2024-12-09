@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import { useDispatch } from "react-redux";  // Redux Toolkit
+import { createAsyncMessage } from '../slice/messageSlice'  // Redux Toolkit
 import axios from 'axios';
 
 function FrontProductModal({ closeProductModal, product, getCart }) {
 
   const { setCartOpen } = useOutletContext(); // (跨元件傳遞)
   const [carQuantity, setcarQuantity] = useState(1); // 商品-數量
+  const dispatch = useDispatch(); // 啟用 Redux Toolkit
 
   // API-寫入購物車
   const addToCar = async () => {
@@ -19,6 +22,9 @@ function FrontProductModal({ closeProductModal, product, getCart }) {
     try {
       const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`, data,);
       console.log('Detail 訂單:', res);
+
+      dispatch(createAsyncMessage(res.data)); // 加入完成訊息 (Redux Toolkit)
+
       getCart(); // 訂單-數量 (跨元件傳遞)
       closeProductModal();
       setCartOpen(true)

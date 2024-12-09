@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useOutletContext } from "react-router-dom";
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";  // Redux Toolkit
+import { createAsyncMessage } from '../../slice/messageSlice'  // Redux Toolkit
 import axios from 'axios';
 import 'bootstrap';
 import { Modal } from "bootstrap";
@@ -16,6 +18,7 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState('*'); // 預設選取的類別為所有
   const [selectedProduct, setSelectedProduct] = useState({}); // 選取的產品
   const { getCart, product } = useOutletContext(); // 訂單-數量 (跨元件傳遞)
+  const dispatch = useDispatch(); // 啟用 Redux Toolkit
   const navigate = useNavigate(); // 轉址
   const productModal = useRef(null); // Modal
 
@@ -55,11 +58,15 @@ function Home() {
       setLoading(true); // react-loading
       const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`, data,);
       console.log('Detail 訂單:', res);
+      
+      dispatch(createAsyncMessage(res.data)); // 加入完成訊息 (Redux Toolkit)
+
       getCart(); // 訂單-數量 (跨元件傳遞)
       closeProductModal();
       window.scrollTo(0, 0);
       navigate(`cart`);
       setLoading(false); // react-loading
+
     } catch(error) {
       setLoading(false); // react-loading
       console.log(error);
